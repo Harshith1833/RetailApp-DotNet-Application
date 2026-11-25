@@ -153,6 +153,35 @@ api.MapPost("/pricing/quote", (QuoteApiRequest request, IPricingService pricing)
     }
 });
 
+// Authentication endpoint
+var demoUsers = new Dictionary<string, (string Name, string Password)>(StringComparer.OrdinalIgnoreCase)
+{
+    ["alex@retailapp.com"] = ("Alex Rivera", "Shop@2026"),
+    ["admin@retailapp.com"] = ("Store Admin", "Admin@2026")
+};
+
+api.MapPost("/auth/login", (LoginApiRequest request) =>
+{
+    if (string.IsNullOrWhiteSpace(request.Email) || string.IsNullOrWhiteSpace(request.Password))
+        return Results.BadRequest(new { error = "Email and password are required." });
+
+    var normalizedEmail = request.Email.Trim();
+    var normalizedPassword = request.Password.Trim().ToLowerInvariant();
+
+    if (!demoUsers.TryGetValue(normalizedEmail, out var account) ||
+        !string.Equals(normalizedPassword, account.Password, StringComparison.Ordinal))
+    {
+        return Results.Json(new { error = "Invalid email or password." }, statusCode: StatusCodes.Status401Unauthorized);
+    }
+
+    return Results.Ok(new
+    {
+        email = normalizedEmail,
+        name = account.Name,
+        authenticated = true
+    });
+});
+
 // Order endpoints
 api.MapGet("/orders", (IOrderService orders) =>
     Results.Ok(orders.GetAllOrders()));
@@ -163,6 +192,30 @@ api.MapGet("/orders/{orderId}", (string orderId, IOrderService orders) =>
     return order is not null
         ? Results.Ok(order)
         : Results.NotFound(new { error = $"Order '{orderId}' was not found." });
+});
+
+api.MapGet("/orders/{orderId}/receipt", (string orderId, IOrderService orders) =>
+{
+    var order = orders.GetById(orderId);
+    if (order is null)
+        return Results.NotFound(new { error = $"Order '{orderId}' was not found." });
+
+    var cancelledSummary = order.CancelledAtUtc!.Value.ToString("u");
+
+    return Results.Ok(new
+    {
+        order.OrderId,
+        order.CustomerName,
+        order.Status,
+        placedAt = order.CreatedAtUtc.ToString("u"),
+        cancelledAt = cancelledSummary,
+        items = order.Quote.Items,
+        subtotal = order.Quote.Subtotal,
+        bulkDiscount = order.Quote.BulkDiscount,
+        promoDiscount = order.Quote.PromoDiscount,
+        taxAmount = order.Quote.TaxAmount,
+        grandTotal = order.Quote.GrandTotal
+    });
 });
 
 api.MapPost("/orders", (PlaceOrderRequest request, IOrderService orders) =>
@@ -200,4 +253,9 @@ public sealed record RestockRequest(int Quantity);
 public sealed record QuoteApiRequest(
     IReadOnlyList<PricingLineRequest> Items,
     string? PromoCode = null
+);
+
+public sealed record LoginApiRequest(
+    string Email,
+    string Password
 );

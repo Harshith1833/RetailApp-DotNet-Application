@@ -105,7 +105,7 @@ public sealed class InventoryService : IInventoryService
 
         lock (_syncLock)
         {
-            var updated = _stockLevels.GetValueOrDefault(product.Id, 0) + quantity;
+            var updated = quantity;
             _stockLevels[product.Id] = updated;
             return new StockItem(product.Id, product.Name, updated, updated <= LowStockThreshold);
         }

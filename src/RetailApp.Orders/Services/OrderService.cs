@@ -134,7 +134,7 @@ public sealed class OrderService : IOrderService
         // Return reserved stock back to inventory
         foreach (var item in cancelledOrder.Quote.Items)
         {
-            _inventory.Release(item.ProductId, item.Quantity);
+            _inventory.Release(item.ProductId, -item.Quantity);
         }
 
         return new OrderResult(true, null, cancelledOrder);

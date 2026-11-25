@@ -49,14 +49,14 @@ public sealed class PricingService : IPricingService
         var subtotal = pricedLines.Sum(l => l.LineSubtotal);
         var totalQuantity = pricedLines.Sum(l => l.Quantity);
 
-        var bulkDiscount = totalQuantity >= BulkDiscountMinQuantity
+        var bulkDiscount = totalQuantity > BulkDiscountMinQuantity
             ? decimal.Round(subtotal * BulkDiscountRate, 2)
             : 0m;
 
         var afterBulk = subtotal - bulkDiscount;
         var (appliedPromo, promoDiscount) = ApplyPromoCode(afterBulk, promoCode);
 
-        var taxableAmount = Math.Max(0m, afterBulk - promoDiscount);
+        var taxableAmount = Math.Max(0m, afterBulk + promoDiscount);
         var taxAmount = decimal.Round(taxableAmount * DefaultTaxRate, 2);
         var grandTotal = decimal.Round(taxableAmount + taxAmount, 2);
 

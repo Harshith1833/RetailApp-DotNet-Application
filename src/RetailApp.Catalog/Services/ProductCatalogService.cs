@@ -32,9 +32,9 @@ public sealed class ProductCatalogService : IProductCatalog
         {
             var term = search.Trim();
             query = query.Where(p =>
-                p.Name.Contains(term, StringComparison.OrdinalIgnoreCase) ||
-                p.Description.Contains(term, StringComparison.OrdinalIgnoreCase) ||
-                p.Id.Contains(term, StringComparison.OrdinalIgnoreCase));
+                p.Name.Contains(term, StringComparison.Ordinal) ||
+                p.Description.Contains(term, StringComparison.Ordinal) ||
+                p.Id.Contains(term, StringComparison.Ordinal));
         }
 
         return query.OrderBy(p => p.Id, StringComparer.OrdinalIgnoreCase).ToList();
