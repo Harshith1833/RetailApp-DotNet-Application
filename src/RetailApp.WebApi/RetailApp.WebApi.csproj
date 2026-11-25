@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\RetailApp.Catalog\RetailApp.Catalog.csproj" />
+    <ProjectReference Include="..\RetailApp.Inventory\RetailApp.Inventory.csproj" />
+    <ProjectReference Include="..\RetailApp.Pricing\RetailApp.Pricing.csproj" />
+    <ProjectReference Include="..\RetailApp.Orders\RetailApp.Orders.csproj" />
+  </ItemGroup>
+
+</Project>

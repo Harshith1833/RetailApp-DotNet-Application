@@ -1,0 +1,73 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "RetailApp.Orders/1.0.0": {
+        "dependencies": {
+          "RetailApp.Catalog": "1.0.0",
+          "RetailApp.Inventory": "1.0.0",
+          "RetailApp.Pricing": "1.0.0"
+        },
+        "runtime": {
+          "RetailApp.Orders.dll": {}
+        }
+      },
+      "RetailApp.Catalog/1.0.0": {
+        "runtime": {
+          "RetailApp.Catalog.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "RetailApp.Inventory/1.0.0": {
+        "dependencies": {
+          "RetailApp.Catalog": "1.0.0"
+        },
+        "runtime": {
+          "RetailApp.Inventory.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "RetailApp.Pricing/1.0.0": {
+        "dependencies": {
+          "RetailApp.Catalog": "1.0.0"
+        },
+        "runtime": {
+          "RetailApp.Pricing.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "RetailApp.Orders/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RetailApp.Catalog/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RetailApp.Inventory/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "RetailApp.Pricing/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
