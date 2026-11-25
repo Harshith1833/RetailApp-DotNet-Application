@@ -59,6 +59,10 @@ project.assets.json
 .env.*
 appsettings.Local.json
 
+# Local documentation / demo reference files
+JIRA_Tickets_Code_Locations.md
+JIRA_Tickets_Navigation_Guide.md
+
 # OS generated files
 Thumbs.db
 ehthumbs.db
